@@ -1,10 +1,13 @@
 package auth
 
-import "github.com/kamva/mgm/v3"
+import (
+	"time"
+)
 
 type MUser struct {
-	mgm.DefaultModel `bson:",inline"`
-	Name             string `bson:"username" validate:"required"`
-	Email            string `bson:"email" validate:"required,email" unique:"true"`
-	Password         string `bson:"password" validate:"required,min=8"`
+	Name      string    `bson:"username" validate:"required"`
+	Email     string    `bson:"email" validate:"required,email" unique:"true"`
+	Password  string    `bson:"password" validate:"required,min=8"`
+	CreatedAt time.Time `bson:"created_at"`
+	UpdatedAt time.Time `bson:"updated_at"`
 }
