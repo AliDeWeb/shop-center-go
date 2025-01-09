@@ -1,5 +1,6 @@
 # Dirs
 /vendor
+/tmp
 
 # Files
 app.exe
