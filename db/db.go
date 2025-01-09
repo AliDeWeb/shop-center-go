@@ -42,14 +42,20 @@ func ConnectToMongo(uri string) {
 
 		// Create Indexes
 		wg.Add(1)
-		go createUniqueIndexes("user", []string{"email"}, &wg)
+		go func() {
+			defer wg.Done()
+
+			err := createUniqueIndexes("user", []string{"email"})
+			if err != nil {
+				log.Printf("Error creating indexes for collection %s:", err)
+			}
+		}()
+		wg.Wait()
 	})
 
 }
 
-func createUniqueIndexes(collection string, fields []string, wg *sync.WaitGroup) error {
-	defer wg.Done()
-
+func createUniqueIndexes(collection string, fields []string) error {
 	dbName := config.ServerEnvsConfig.MongoDbName
 	coll := MongoClient.Database(dbName).Collection(collection)
 
