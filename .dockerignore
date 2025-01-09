@@ -2,5 +2,5 @@
 /vendor
 
 # Files
-.env
 app.exe
+.env.example
