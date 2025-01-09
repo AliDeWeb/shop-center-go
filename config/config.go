@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	auth "github.com/alideweb/shop-center-go/modules/user"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -28,6 +29,7 @@ func ConfigEnvs() *ServerEnvsConfig {
 }
 
 func SetupRoutes(engine *gin.Engine) {
+	auth.Routes(engine)
 }
 
 func StartServer(engine *gin.Engine, port string) {
