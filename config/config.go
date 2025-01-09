@@ -13,6 +13,7 @@ type TServerEnvsConfig struct {
 	Port        string
 	MongoUri    string
 	MongoDbName string
+	JwtSecret   string
 }
 
 var (
@@ -27,7 +28,7 @@ func ConfigEnvs() {
 			log.Fatal("Error loading .env file", err)
 		}
 
-		ServerEnvsConfig = &TServerEnvsConfig{Port: os.Getenv("PORT"), MongoUri: os.Getenv("MONGO_URI"), MongoDbName: os.Getenv("MONGO_DB_NAME")}
+		ServerEnvsConfig = &TServerEnvsConfig{Port: os.Getenv("PORT"), MongoUri: os.Getenv("MONGO_URI"), MongoDbName: os.Getenv("MONGO_DB_NAME"), JwtSecret: os.Getenv("JWT_SECRET")}
 	})
 }
 
