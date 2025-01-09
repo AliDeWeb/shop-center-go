@@ -3,33 +3,32 @@ package config
 import (
 	"log"
 	"os"
+	"sync"
 
-	auth "github.com/alideweb/shop-center-go/modules/user"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
-type ServerEnvsConfig struct {
+type TServerEnvsConfig struct {
 	Port        string
 	MongoUri    string
 	MongoDbName string
 }
 
-func ConfigEnvs() *ServerEnvsConfig {
-	// --> Load Envs File
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file", err)
-	}
+var (
+	ServerEnvsConfig *TServerEnvsConfig
+	once             sync.Once
+)
 
-	// --> Load Envs value
-	serverEnvsConfig := ServerEnvsConfig{Port: os.Getenv("PORT"), MongoUri: os.Getenv("MONGO_URI"), MongoDbName: os.Getenv("MONGO_DB_NAME")}
+func ConfigEnvs() {
+	once.Do(func() {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file", err)
+		}
 
-	return &serverEnvsConfig
-}
-
-func SetupRoutes(engine *gin.Engine) {
-	auth.Routes(engine)
+		ServerEnvsConfig = &TServerEnvsConfig{Port: os.Getenv("PORT"), MongoUri: os.Getenv("MONGO_URI"), MongoDbName: os.Getenv("MONGO_DB_NAME")}
+	})
 }
 
 func StartServer(engine *gin.Engine, port string) {

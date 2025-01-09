@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/alideweb/shop-center-go/config"
 	"github.com/alideweb/shop-center-go/db"
+	"github.com/alideweb/shop-center-go/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,11 +11,11 @@ import (
 func main() {
 	r := gin.Default()
 
-	serverEnvsConfig := config.ConfigEnvs()
+	config.ConfigEnvs()
 
-	db.ConnectToMongo(serverEnvsConfig.MongoUri)
+	db.ConnectToMongo(config.ServerEnvsConfig.MongoUri)
 
-	config.SetupRoutes(r)
+	routes.SetupRoutes(r)
 
-	config.StartServer(r, serverEnvsConfig.Port)
+	config.StartServer(r, config.ServerEnvsConfig.Port)
 }

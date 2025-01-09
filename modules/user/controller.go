@@ -12,13 +12,17 @@ func CRegisterUser(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprintf("Invalid body request: %s", err.Error())})
-	} else {
-		result := SRegisterUser(&user)
-
-		c.JSON(http.StatusOK, gin.H{
-			"message": "User data received",
-			"user":    result,
-		})
+		return
 	}
 
+	_, data, err := SRegisterUser(&user)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprintf("duplicate email: %s", err.Error())})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User data received",
+		"user":    data,
+	})
 }
