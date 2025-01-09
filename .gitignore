@@ -1,1 +1,6 @@
+# Dirs
+/vendor
+
+# Files
 .env
+main.exe
