@@ -1,0 +1,31 @@
+services:
+  server:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - bridge_network
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://db:27017
+      - MONGO_DB_NAME=shop-center-go
+
+  db:
+    image: mongo:7.0.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - db:/data/db
+      - configdb:/data/configdb
+    networks:
+      - bridge_network
+
+volumes:
+  db:
+  configdb:
+
+networks:
+  bridge_network:
+    driver: bridge
