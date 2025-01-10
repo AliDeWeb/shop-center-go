@@ -37,6 +37,7 @@ func SRegisterUser(user *MUser) (*mongo.InsertOneResult, *MUser, *tokens, error)
 
 	user.Password = <-passwordChan
 	user.Token = <-refreshTokenChan
+	user.Role = "user"
 	user.CreatedAt = time.Now()
 	user.UpdatedAt = time.Now()
 

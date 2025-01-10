@@ -12,6 +12,7 @@ type MUser struct {
 	Email     string             `bson:"email" binding:"required,email" unique:"true"`
 	Password  string             `bson:"password" binding:"required,min=8,max=100"`
 	Token     string             `bson:"token"`
+	Role      string             `bson:"role"`
 	CreatedAt time.Time          `bson:"created_at"`
 	UpdatedAt time.Time          `bson:"updated_at"`
 }
