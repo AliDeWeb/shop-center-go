@@ -8,11 +8,11 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-func GenerateJWT(data string, expiresInHour uint) string {
+func GenerateJWT(data string, expiresInMinute int) string {
 	claims := jwt.MapClaims{
-		data:  data,
-		"iat": time.Now().Unix(),
-		"exp": time.Now().Add(time.Duration(expiresInHour) * time.Hour).Unix(),
+		"data": data,
+		"iat":  time.Now().Unix(),
+		"exp":  time.Now().Add(time.Duration(expiresInMinute) * time.Minute).Unix(),
 	}
 
 	secretKey := []byte(config.ServerEnvsConfig.JwtSecret)

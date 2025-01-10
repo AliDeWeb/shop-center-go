@@ -7,11 +7,11 @@ import (
 )
 
 type MUser struct {
-	_id       primitive.ObjectID `bson:"-"`
-	Name      string             `bson:"username" validate:"required"`
-	Email     string             `bson:"email" validate:"required,email" unique:"true"`
-	Password  string             `bson:"password" validate:"required,min=8"`
+	ID        primitive.ObjectID `bson:"_id,omitempty"`
+	Name      string             `bson:"username" binding:"required,min=2,max=50"`
+	Email     string             `bson:"email" binding:"required,email" unique:"true"`
+	Password  string             `bson:"password" binding:"required,min=8,max=100"`
+	Token     string             `bson:"token"`
 	CreatedAt time.Time          `bson:"created_at"`
 	UpdatedAt time.Time          `bson:"updated_at"`
-	Token     string             `bson:"token"`
 }
